@@ -49,6 +49,9 @@
       "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIzQmTIeccj1vILJPaYf3jO/SFWU5PkspR2xLU/sXInUAfKapfkYC6iDSbbmsXHD6q5F3hwmI3ofGXOqA1kk1MM= jakehillion@devbig002.cln5.facebook.com"
     ];
 
+    ## General settings
+    time.timeZone = "Etc/UTC"; # UTC for global consistency
+
     ## Nix settings
     hardware.enableAllFirmware = true;
     nix = {
@@ -64,6 +67,16 @@
     };
     nixpkgs.config.allowUnfree = true;
 
+    system.autoUpgrade = {
+      enable = true;
+      allowReboot = true;
+
+      flake = "github:JakeHillion/scx-nixos-deployments#${config.networking.fqdn}";
+      flags = [ "--print-build-logs" ];
+
+      dates = "Mon, Fri 13:00";
+      randomizedDelaySec = "60min";
+    };
 
     ## Networking
     networking = {
