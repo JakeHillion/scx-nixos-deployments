@@ -26,6 +26,20 @@
       interval = "Tue, 02:00";
     };
 
+    ## GitHub Runners
+    age.secrets."github/sched_ext-nixos-self-hosted-runners".file = ../../secrets/github/sched_ext-nixos-self-hosted-runners.age;
+    services.github-runners = builtins.listToAttrs
+      (builtins.genList
+        (i: {
+          name = "${config.networking.hostName}-${builtins.toString i}";
+          value = {
+            enable = true;
+            url = "https://github.com/sched-ext";
+            tokenFile = age.secrets."github/sched_ext-nixos-self-hosted-runners".path;
+            replace = true;
+          };
+        }) 1);
+
     ## System packages
     environment = {
       systemPackages = with pkgs; [

@@ -5,11 +5,16 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
     flake-utils.url = "github:numtide/flake-utils";
+
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.darwin.follows = "";
   };
 
   outputs =
     { self
     , nixpkgs
+    , agenix
     , flake-utils
     , ...
     }@inputs: {
@@ -27,6 +32,8 @@
               modules = [
                 ./hosts/${fqdn}/default.nix
                 ./modules/default.nix
+
+                agenix.nixosModules.default
 
                 ({ config, ... }: {
                   system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
