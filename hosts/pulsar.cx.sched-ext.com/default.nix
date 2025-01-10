@@ -43,11 +43,27 @@
 
     ## SSH
     services.openssh.enable = true;
-    users.users."root".openssh.authorizedKeys.keys = [
-      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAaj+1br1lsyGfTUiE+w34HfOasExhNRHluYzCNoWN7haoskclFBnFnUjS3d4p5+RmhaSec3WUaf952uoHJ1Cps= jakehillion@jakehillion-mbp"
-      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC0uKIvvvkzrOcS7AcamsQRFId+bqPwUC9IiUIsiH5oWX1ReiITOuEo+TL9YMII5RyyfJFeu2ZP9moNuZYlE7Bs= jake@jake-mbp"
-      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIzQmTIeccj1vILJPaYf3jO/SFWU5PkspR2xLU/sXInUAfKapfkYC6iDSbbmsXHD6q5F3hwmI3ofGXOqA1kk1MM= jakehillion@devbig002.cln5.facebook.com"
-    ];
+
+    users = {
+      mutableUsers = false;
+
+      users."root".openssh.authorizedKeys.keys = [
+        "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAaj+1br1lsyGfTUiE+w34HfOasExhNRHluYzCNoWN7haoskclFBnFnUjS3d4p5+RmhaSec3WUaf952uoHJ1Cps= jakehillion@jakehillion-mbp"
+        "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC0uKIvvvkzrOcS7AcamsQRFId+bqPwUC9IiUIsiH5oWX1ReiITOuEo+TL9YMII5RyyfJFeu2ZP9moNuZYlE7Bs= jake@jake-mbp"
+        "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIzQmTIeccj1vILJPaYf3jO/SFWU5PkspR2xLU/sXInUAfKapfkYC6iDSbbmsXHD6q5F3hwmI3ofGXOqA1kk1MM= jakehillion@devbig002.cln5.facebook.com"
+      ];
+      users.scx = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" ]; # enable sudo
+
+        openssh.authorizedKeys.keys = [
+          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAaj+1br1lsyGfTUiE+w34HfOasExhNRHluYzCNoWN7haoskclFBnFnUjS3d4p5+RmhaSec3WUaf952uoHJ1Cps= jakehillion@jakehillion-mbp"
+          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC0uKIvvvkzrOcS7AcamsQRFId+bqPwUC9IiUIsiH5oWX1ReiITOuEo+TL9YMII5RyyfJFeu2ZP9moNuZYlE7Bs= jake@jake-mbp"
+          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIzQmTIeccj1vILJPaYf3jO/SFWU5PkspR2xLU/sXInUAfKapfkYC6iDSbbmsXHD6q5F3hwmI3ofGXOqA1kk1MM= jakehillion@devbig002.cln5.facebook.com"
+        ];
+      };
+    };
+    security.sudo.wheelNeedsPassword = false;
 
     ## General settings
     time.timeZone = "Etc/UTC"; # UTC for global consistency
