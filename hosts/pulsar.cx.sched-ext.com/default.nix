@@ -37,6 +37,10 @@
             url = "https://github.com/sched-ext";
             tokenFile = config.age.secrets."github/sched_ext-nixos-self-hosted-runners".path;
             replace = true;
+
+            serviceOverrides = {
+              TimeoutStopSec = "900s"; # allow service to take a long time to stop, as interrupting running jobs will be messy
+            };
           };
         }) 2);
 
