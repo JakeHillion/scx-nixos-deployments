@@ -5,7 +5,9 @@
     ./hardware-configuration.nix
   ];
 
-  config = {
+  config = let
+    runnerCount = 2;
+  in {
     system.stateVersion = "24.11";
 
     networking.hostName = "pulsar";
@@ -37,8 +39,12 @@
             url = "https://github.com/sched-ext";
             tokenFile = config.age.secrets."github/sched_ext-nixos-self-hosted-runners".path;
             replace = true;
+
+            serviceOverrides = {
+              TimeoutStopSec = "900s"; # allow service to take a long time to stop, as interrupting running jobs will be messy
+            };
           };
-        }) 2);
+        }) runnerCount);
 
     ## System packages
     environment = {
@@ -97,6 +103,7 @@
     };
     nixpkgs.config.allowUnfree = true;
 
+    ## Automatic upgrades
     system.autoUpgrade = {
       enable = true;
       allowReboot = true;
@@ -107,6 +114,10 @@
       dates = "Mon-Fri 13:00";
       randomizedDelaySec = "60min";
     };
+
+    systemd.services."nixos-upgrade".preStart = ''
+      systemctl stop ${builtins.concatStringsSep " " (builtins.map (key: "github-runner-${key}.service") (builtins.attrNames config.services.github-runners))}
+    '';
 
     ## Networking
     networking = {
