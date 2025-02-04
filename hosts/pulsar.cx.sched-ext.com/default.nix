@@ -38,7 +38,7 @@
             tokenFile = config.age.secrets."github/sched_ext-nixos-self-hosted-runners".path;
             replace = true;
           };
-        }) 1);
+        }) 2);
 
     ## System packages
     environment = {
