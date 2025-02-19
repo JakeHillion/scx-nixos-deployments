@@ -37,6 +37,10 @@
             url = "https://github.com/sched-ext";
             tokenFile = config.age.secrets."github/sched_ext-nixos-self-hosted-runners".path;
             replace = true;
+
+            extraPackages = with pkgs; [
+              git
+            ];
           };
         }) 2);
 
