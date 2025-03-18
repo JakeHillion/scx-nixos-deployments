@@ -42,7 +42,7 @@
               git
             ];
           };
-        }) 2);
+        }) 4);
 
     ## System packages
     environment = {
