@@ -1,5 +1,8 @@
 { config, pkgs, lib, ... }:
 
+let
+  numRunners = 4;
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -32,17 +35,32 @@
       (builtins.genList
         (i: {
           name = "${config.networking.hostName}-${builtins.toString i}";
-          value = {
-            enable = true;
-            url = "https://github.com/sched-ext";
-            tokenFile = config.age.secrets."github/sched_ext-nixos-self-hosted-runners".path;
-            replace = true;
+          value =
+            let
+              workDir = "/var/tmp/github-runner-${config.networking.hostName}-${builtins.toString i}";
+            in
+            {
+              enable = true;
+              url = "https://github.com/sched-ext";
+              tokenFile = config.age.secrets."github/sched_ext-nixos-self-hosted-runners".path;
+              replace = true;
 
-            extraPackages = with pkgs; [
-              git
-            ];
-          };
-        }) 4);
+              inherit workDir;
+              serviceOverrides.ReadWritePaths = [ workDir ];
+
+              extraPackages = with pkgs; [
+                git
+              ];
+            };
+        })
+        numRunners);
+    systemd.tmpfiles.rules = lib.lists.flatten (builtins.genList
+      (i: [
+        "e! /var/tmp/github-runner-${config.networking.hostName}-${builtins.toString i} - - - 0"
+        "d  /var/tmp/github-runner-${config.networking.hostName}-${builtins.toString i} 0700 root root -"
+      ])
+      numRunners);
+
 
     ## System packages
     environment = {
