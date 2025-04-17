@@ -48,6 +48,10 @@ in
             workDir = "%C/${cacheName}";
             serviceOverrides.CacheDirectory = cacheName;
 
+            serviceOverrides.PrivateDevices = "false";
+            serviceOverrides.DeviceAllow = "/dev/kvm";
+            serviceOverrides.SupplementaryGroups = [ "kvm" ];
+
             extraPackages = with pkgs; [
               git
             ];
