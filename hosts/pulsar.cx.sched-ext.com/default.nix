@@ -45,7 +45,7 @@ in
             tokenFile = config.age.secrets."github/sched_ext-nixos-self-hosted-runners".path;
             replace = true;
 
-            workDir = "%C/${cacheName}";
+            workDir = "%C/private/${cacheName}";
             serviceOverrides.CacheDirectory = cacheName;
 
             serviceOverrides.PrivateDevices = "false";
