@@ -52,8 +52,14 @@ in
             serviceOverrides.DeviceAllow = "/dev/kvm";
             serviceOverrides.SupplementaryGroups = [ "kvm" ];
 
+            # keep these limited as they're not pinned in the workflow, but this makes life much easier
             extraPackages = with pkgs; [
+              # required for actions/checkout
               git
+
+              # required for github caching
+              gnutar
+              zstd
             ];
           };
         })
@@ -107,6 +113,13 @@ in
       settings.experimental-features = [ "nix-command" "flakes" ];
       settings = {
         auto-optimise-store = true;
+
+        substituters = [
+          "https://sched-ext.cachix.org"
+        ];
+        trusted-public-keys = [
+          "sched-ext.cachix.org-1:L8GgzYWc6y3+i4Ks9vJI5NF42AOqmzkFD+fRAeUQgws="
+        ];
       };
       gc = {
         automatic = true;
