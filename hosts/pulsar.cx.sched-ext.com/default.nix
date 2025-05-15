@@ -52,8 +52,14 @@ in
             serviceOverrides.DeviceAllow = "/dev/kvm";
             serviceOverrides.SupplementaryGroups = [ "kvm" ];
 
+            # keep these limited as they're not pinned in the workflow, but this makes life much easier
             extraPackages = with pkgs; [
+              # required for actions/checkout
               git
+
+              # required for github caching
+              tar
+              zstd
             ];
           };
         })
