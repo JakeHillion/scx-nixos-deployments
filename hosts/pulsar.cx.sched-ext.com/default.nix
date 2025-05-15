@@ -52,8 +52,14 @@ in
             serviceOverrides.DeviceAllow = "/dev/kvm";
             serviceOverrides.SupplementaryGroups = [ "kvm" ];
 
+            # keep these limited as they're not pinned in the workflow, but this makes life much easier
             extraPackages = with pkgs; [
+              # required for actions/checkout
               git
+
+              # required for github caching
+              tar
+              zstd
             ];
           };
         })
@@ -107,6 +113,10 @@ in
       settings.experimental-features = [ "nix-command" "flakes" ];
       settings = {
         auto-optimise-store = true;
+
+        # generated with `sudo nix-store --generate-binary-cache-key pulsar.cx.sched-ext.com-1 /etc/nix/keys/runner-secret-key.pem /etc/nix/keys/runner-public-key.pem`
+        secret-key-files = [ "/etc/nix/keys/runner-secret-key.pem" ];
+        trusted-public-keys = [ "pulsar.cx.sched-ext.com-1:Wltdugz67jJxqj8QrOClRD0FbuaGgxEG3MwDxHSEt3Q=" ];
       };
       gc = {
         automatic = true;
