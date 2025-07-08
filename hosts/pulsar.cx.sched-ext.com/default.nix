@@ -45,6 +45,8 @@ in
             tokenFile = config.age.secrets."github/sched_ext-nixos-self-hosted-runners".path;
             replace = true;
 
+            extraLabels = [ "metal:nixos" ];
+
             workDir = "%C/private/${cacheName}";
             serviceOverrides.CacheDirectory = cacheName;
 
