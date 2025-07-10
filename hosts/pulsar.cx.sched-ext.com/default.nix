@@ -40,30 +40,30 @@ in
               cacheName = "github-runner-${config.networking.hostName}-${builtins.toString i}";
             in
             {
-            enable = true;
-            url = "https://github.com/sched-ext";
-            tokenFile = config.age.secrets."github/sched_ext-nixos-self-hosted-runners".path;
-            replace = true;
+              enable = true;
+              url = "https://github.com/sched-ext";
+              tokenFile = config.age.secrets."github/sched_ext-nixos-self-hosted-runners".path;
+              replace = true;
 
-            extraLabels = [ "metal:nixos" ];
+              extraLabels = [ "metal:nixos" ];
 
-            workDir = "%C/private/${cacheName}";
-            serviceOverrides.CacheDirectory = cacheName;
+              workDir = "%C/private/${cacheName}";
+              serviceOverrides.CacheDirectory = cacheName;
 
-            serviceOverrides.PrivateDevices = "false";
-            serviceOverrides.DeviceAllow = "/dev/kvm";
-            serviceOverrides.SupplementaryGroups = [ "kvm" ];
+              serviceOverrides.PrivateDevices = "false";
+              serviceOverrides.DeviceAllow = "/dev/kvm";
+              serviceOverrides.SupplementaryGroups = [ "kvm" ];
 
-            # keep these limited as they're not pinned in the workflow, but this makes life much easier
-            extraPackages = with pkgs; [
-              # required for actions/checkout
-              git
+              # keep these limited as they're not pinned in the workflow, but this makes life much easier
+              extraPackages = with pkgs; [
+                # required for actions/checkout
+                git
 
-              # required for github caching
-              gnutar
-              zstd
-            ];
-          };
+                # required for github caching
+                gnutar
+                zstd
+              ];
+            };
         })
         numRunners);
 
