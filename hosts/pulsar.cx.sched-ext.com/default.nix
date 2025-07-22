@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  numRunners = 6;
+  numRunners = 10;
 in
 {
   imports = [
