@@ -44,5 +44,9 @@
         nixpkgs.lib.genAttrs fqdns mkHost;
     } // flake-utils.lib.eachDefaultSystem (system: {
       formatter = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
+
+      packages = {
+        github-runner-image = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/github-runner-image.nix { };
+      };
     });
 }

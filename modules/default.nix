@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./github-runner-podman.nix
   ];
 }
 

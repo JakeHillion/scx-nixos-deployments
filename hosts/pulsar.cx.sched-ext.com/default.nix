@@ -29,8 +29,19 @@ in
       interval = "Tue, 02:00";
     };
 
+    ## Podman
+    virtualisation.podman = {
+      enable = true;
+      dockerCompat = false;
+    };
+
     ## GitHub Runners
     age.secrets."github/sched_ext-nixos-self-hosted-runners".file = ../../secrets/github/sched_ext-nixos-self-hosted-runners.age;
+    age.secrets."github/sched_ext-nixos-self-hosted-runners-podman" = {
+      file = ../../secrets/github/sched_ext-nixos-self-hosted-runners.age;
+      owner = "github-runner-podman";
+      group = "github-runner-podman";
+    };
     services.github-runners = builtins.listToAttrs
       (builtins.genList
         (i: {
@@ -67,7 +78,13 @@ in
         })
         numRunners);
 
-    ## System packages
+    ## Podman-based GitHub Runners
+    services.github-runners-podman = {
+      enable = true;
+      numRunners = 2;
+    };
+
+    ## System packages
     environment = {
       systemPackages = with pkgs; [
         git
@@ -107,7 +124,7 @@ in
     security.sudo.wheelNeedsPassword = false;
 
     ## General settings
-    time.timeZone = "Etc/UTC"; # UTC for global consistency
+    time.timeZone = "Etc/UTC"; # UTC for global consistency
 
     ## Nix settings
     hardware.enableAllFirmware = true;
