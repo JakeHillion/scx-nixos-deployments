@@ -115,9 +115,8 @@ in
         extraGroups = [ "wheel" ]; # enable sudo
 
         openssh.authorizedKeys.keys = [
-          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAaj+1br1lsyGfTUiE+w34HfOasExhNRHluYzCNoWN7haoskclFBnFnUjS3d4p5+RmhaSec3WUaf952uoHJ1Cps= jakehillion@jakehillion-mbp"
           "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC0uKIvvvkzrOcS7AcamsQRFId+bqPwUC9IiUIsiH5oWX1ReiITOuEo+TL9YMII5RyyfJFeu2ZP9moNuZYlE7Bs= jake@jake-mbp"
-          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIzQmTIeccj1vILJPaYf3jO/SFWU5PkspR2xLU/sXInUAfKapfkYC6iDSbbmsXHD6q5F3hwmI3ofGXOqA1kk1MM= jakehillion@devbig002.cln5.facebook.com"
+          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIz2CF69dwLg0IsuS7qoFL0TdOe0voalnKk6Xwk6ETL1rrzBUa7ZyZ7Pbb+2733BxSGCCGhdfzWI2/KO0FaH3xU= jake@maverick"
         ];
       };
     };
